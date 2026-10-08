@@ -11,7 +11,7 @@ const NODES: HN[] = [
   { id: "pr", label: "PROJECTS", x: 50, y: 72, kind: "step" },
   { id: "i", label: "INTERVIEW READY", x: 50, y: 92, kind: "step" },
 ];
-const EDGES = [["t", "m"], ["t", "p"], ["t", "s"], ["m", "q"], ["p", "q"], ["s", "q"], ["q", "pr"], ["pr", "i"]];
+const EDGES: [string, string][] = [["t", "m"], ["t", "p"], ["t", "s"], ["m", "q"], ["p", "q"], ["s", "q"], ["q", "pr"], ["pr", "i"]];
 
 export function HeroGraph() {
   const [hover, setHover] = useState<string | null>("s");

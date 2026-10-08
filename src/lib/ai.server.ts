@@ -8,7 +8,7 @@ export class FriendlyError extends Error {}
 
 /** Streams a Responses call to completion server-side and returns parsed JSON. */
 export async function runJson(instructions: string, prompt: string): Promise<unknown> {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env['LOVABLE_API_KEY'];
   if (!apiKey) throw new FriendlyError("AI is not configured for this app yet.");
   const provider = createOpenAI({
     baseURL: GATEWAY,
