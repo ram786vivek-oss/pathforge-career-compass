@@ -91,7 +91,7 @@ const INTEL_SHAPES: Record<IntelKind, string> = {
 
 export const generateNodeIntel = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => intelInputSchema.parse(d))
-  .handler(async ({ data }): Promise<Result<unknown>> => {
+  .handler(async ({ data }): Promise<Result<Record<string, any>>> => {
     const { runJson, FriendlyError } = await import("./ai.server");
     try {
       const instructions = `You are PathForge, a senior mentor for people becoming a ${data.role}${data.industry ? ` in ${data.industry}` : ""}. Be specific and concrete; never give generic advice. Return ONLY a JSON object (no markdown) with this shape:\n${INTEL_SHAPES[data.kind]}`;
@@ -103,7 +103,7 @@ Estimated effort: ${data.node.hours} hours
 Learner level: ${data.level}`;
       const raw = await runJson(instructions, prompt);
       const parsed = intelSchemas[data.kind].parse(raw);
-      return { ok: true, data: parsed };
+      return { ok: true, data: parsed as Record<string, any> };
     } catch (e) {
       if (e instanceof FriendlyError) return { ok: false, error: e.message };
       console.error("intel validation failed", e);
